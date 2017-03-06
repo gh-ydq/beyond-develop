@@ -1,8 +1,11 @@
 package com.beyond.develop.controller;
 
 
+
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,10 +15,15 @@ import com.beyond.develop.dto.CMDDataDto;
 import com.beyond.develop.dto.PGDataDto;
 import com.beyond.develop.dto.PHDataDto;
 import com.beyond.develop.dto.PLDataDto;
+import com.beyond.develop.service.PGService;
+import com.qdigo.iotsdk.dto.pg.PGPacketDto;
+
 
 @Controller
 public class IotDataController {
-	
+	private Logger logger = LoggerFactory.getLogger(IotDataController.class);
+//	@Autowired
+//	public PGService pgService;
 	@RequestMapping(value="/iotCMD")
 	public String easyuiTree(){
 		return "cmd";
@@ -23,8 +31,16 @@ public class IotDataController {
 	
 	@RequestMapping(value = "/pgData")
 	public @ResponseBody String sendPgData(@ModelAttribute PGDataDto pgDataDto,HttpServletResponse response){
-		System.out.println(pgDataDto.toString());
-		response.setContentType("text/html;charset=utf-8");
+		try {
+			System.out.println(pgDataDto.toString());
+			response.setContentType("text/html;charset=utf-8");
+			PGService pgService = new PGService();
+			PGPacketDto pgPacketDto = pgService.buildPgPacketDto(pgDataDto);
+			pgService.sendPGData(pgPacketDto);
+		} catch (Exception e) {
+			System.out.println(e.getStackTrace());
+			return "false";
+		}
 		return "success";
 	}
 

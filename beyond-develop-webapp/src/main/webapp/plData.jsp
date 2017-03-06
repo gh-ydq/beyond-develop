@@ -65,7 +65,7 @@
 			$.ajax({
                 cache: true,
                 type: "POST",
-                url:"${pageContext.request.contextPath}/pgCMD",
+                url:"${pageContext.request.contextPath}/plData",
                 data:$('#ff').serialize(),// 你的formid
                 async: false,
                 error: function(request) {
