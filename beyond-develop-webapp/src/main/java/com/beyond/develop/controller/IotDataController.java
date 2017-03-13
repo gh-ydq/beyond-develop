@@ -21,6 +21,10 @@ import com.qdigo.iotsdk.dto.pg.PGPacketDto;
 
 @Controller
 public class IotDataController {
+	public static void main(String[] args) {
+		PGDataDto pgDataDto = new PGDataDto();
+		sendPgData(pgDataDto, null);
+	}
 	private Logger logger = LoggerFactory.getLogger(IotDataController.class);
 //	@Autowired
 //	public PGService pgService;
@@ -30,15 +34,15 @@ public class IotDataController {
 	}
 	
 	@RequestMapping(value = "/pgData")
-	public @ResponseBody String sendPgData(@ModelAttribute PGDataDto pgDataDto,HttpServletResponse response){
+	public @ResponseBody static String sendPgData(@ModelAttribute PGDataDto pgDataDto,HttpServletResponse response){
 		try {
 			System.out.println(pgDataDto.toString());
-			response.setContentType("text/html;charset=utf-8");
+//			response.setContentType("text/html;charset=utf-8");
 			PGService pgService = new PGService();
 			PGPacketDto pgPacketDto = pgService.buildPgPacketDto(pgDataDto);
 			pgService.sendPGData(pgPacketDto);
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());
+			e.printStackTrace();
 			return "false";
 		}
 		return "success";

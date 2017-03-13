@@ -2,6 +2,7 @@ package com.beyond.develop.service;
 
 
 
+import com.beyond.develop.constants.SocketConfigEnum;
 import com.beyond.develop.dto.PGDataDto;
 import com.qdigo.iotsdk.dto.pg.PGPacketDto;
 import com.qdigo.iotsdk.impl.CmdServiceImpl;
@@ -10,6 +11,8 @@ public class PGService {
 	
 	public PGPacketDto buildPgPacketDto(PGDataDto pgDataDto){
 		PGPacketDto pgPacketDto = new PGPacketDto();
+		pgPacketDto.setIp(SocketConfigEnum.IP.getValue());
+		pgPacketDto.setPort(Integer.valueOf(SocketConfigEnum.PORT.getValue()));
 		pgPacketDto.setHeader0(pgDataDto.getHeader0());
 		pgPacketDto.setHeader1(pgDataDto.getHeader1());
 		pgPacketDto.setImei(pgDataDto.getImei());
