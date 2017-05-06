@@ -31,7 +31,7 @@ public class IotDataController {
 	@RequestMapping(value="/iotCMD")
 	public String easyuiTree(){
 		return "cmd";
-	}
+	} 
 	
 	@RequestMapping(value = "/pgData")
 	public @ResponseBody static String sendPgData(@ModelAttribute PGDataDto pgDataDto,HttpServletResponse response){
